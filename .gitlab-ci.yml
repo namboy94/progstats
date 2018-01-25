@@ -1,0 +1,60 @@
+stages:
+  - mirror
+  - test
+  - deploy
+  - release
+
+github_mirror:
+  stage: mirror
+  tags:
+    - github_namboy94_push
+  script:
+    - git checkout master
+    - git pull
+    - git push git@github.com:namboy94/progstats.git master -f
+    - git checkout develop
+    - git pull
+    - git push git@github.com:namboy94/progstats.git develop -f
+
+stylecheck:
+  stage: test
+  tags:
+    - pycodestyle
+  script:
+    - pycodestyle .
+
+deploy_page:
+  stage: deploy
+  only:
+    - master
+    - develop
+  tags:
+    - progstats-live
+  script:
+    - rsync -av ./ /var/www/progstats.namibsun.net/app --delete-after
+
+upload_release_to_github:
+  stage: release
+  only:
+    - master
+  tags:
+    - python
+  script:
+    - mkdir -p artifacts
+    - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
+    - python ci-scripts/src/changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
+    - python ci-scripts/src/github-release-uploader/github-release-uploader.py namboy94 progstats $GITHUB_ACCESS_TOKEN
+      $(python3 setup.py -V) current_changelog artifacts -b master
+
+upload_release_to_gitlab:
+  stage: release
+  only:
+    - master
+  tags:
+    - python
+  script:
+    - mkdir -p artifacts
+    - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
+    - python ci-scripts/src/changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
+    - python ci-scripts/src/gitlab-release-uploader/gitlab-release-uploader.py namboy94 progstats $GITLAB_ACCESS_TOKEN
+      $(python3 setup.py -V) current_changelog artifacts -b master -u https://gitlab.namibsun.net
