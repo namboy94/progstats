@@ -32,6 +32,7 @@ deploy_page:
     - progstats-live
   script:
     - rsync -av ./ /var/www/progstats.namibsun.net/app --delete-after
+    - chmod 755 /var/www/progstats.namibsun.net/app/src/*
 
 upload_release_to_github:
   stage: release
