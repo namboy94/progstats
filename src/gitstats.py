@@ -22,9 +22,13 @@ import os
 
 print("Content-Type: text/html")
 print()
+print("<h1>gitstats</h1>")
 
-file_path = os.path.dirname(__file__)
-base = os.path.join(file_path, '..', "resources", "html", "index.html")
+content_path = os.path.join(os.path.dirname(__file__), "..", "content")
+gitstats = os.path.join(content_path, "gitstats")
 
-with open(base, "r") as f:
-    print(f.read())
+for project in os.listdir(gitstats):
+    project_index = os.path.join(gitstats, project, "index.html")
+
+    if os.path.isfile(project_index):
+        print("<a href=\"" + project_index + "\">" + project + "</a>")
