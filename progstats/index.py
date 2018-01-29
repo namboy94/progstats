@@ -19,21 +19,18 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
+import sys
+sys.path.insert(0, os.path.abspath(".."))
 
-print("Content-Type: text/html")
-print()
 
-file_path = os.path.dirname(__file__)
-template = os.path.join(file_path, '..', "resources", "html", "index.html")
+def main():
+    """
+    Displays the index page
+    :return: None
+    """
+    from progstats.pages.IndexPage import IndexPage
+    IndexPage().render()
 
-with open(template, "r") as template_file:
-    html = template_file.read()
 
-category_html = ""
-for category in ["gitstats", "git_stats", "coverage",
-                 "documentation", "documentation-pdf"]:
-    category_html += "<h3><a href=\"" + category + ".py\">" + category + \
-                     "</a></h3>"
-
-html = html.replace("@{CATEGORIES}", category_html)
-print(html)
+if __name__ == "__main__":
+    main()

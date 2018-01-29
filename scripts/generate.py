@@ -32,7 +32,7 @@ def main():
     The Method starts by cloning the gitlab-cloner script. Using that, all
     repositories of the user's gitlab account are cloned (or pulled if they
     already exist). Afterwards, git_stats and gitstats will be run on the
-    repositories. After that, unittest.sh and documentation.sh scripts will
+    repositories. After that, unittest.sh and documentation-pdf.sh scripts will
     be executed if present.
 
     The resulting outputs will be stored in the "output" directory in the
@@ -60,8 +60,8 @@ def main():
         "gitstats",
         "git_stats",
         "coverage",
-        "documentation",
-        "documentation-pdf"
+        "documentation-pdf",
+        "documentation-pdf-pdf"
     ]:
         directory = os.path.join("output", category)
         if os.path.exists(directory):
@@ -106,8 +106,8 @@ def main():
             if os.path.isfile("documentation.pdf"):
                 os.rename(
                     "documentation.pdf",
-                    os.path.join("..", "..",
-                                 "output", "documentation-pdf", project)
+                    os.path.join("..", "..", "output", "documentation-pdf",
+                                 project + ".pdf")
                 )
 
         os.chdir(os.path.join("..", ".."))

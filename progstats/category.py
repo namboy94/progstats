@@ -18,6 +18,25 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from progstats.objects.CategoryPage import CategoryPage
+import os
+import sys
+import cgi
+sys.path.insert(0, os.path.abspath(".."))
 
-CategoryPage("gitstats").render()
+
+def main():
+    """
+    Displays the category page
+    :return: None
+    """
+    try:
+        args = cgi.FieldStorage()
+        from progstats.pages.CategoryPage import CategoryPage
+        CategoryPage(args["name"].value, args["path"].value).render()
+    except KeyError:
+        from progstats.pages.IndexPage import IndexPage
+        IndexPage().render()
+
+
+if __name__ == "__main__":
+    main()
