@@ -45,12 +45,12 @@ class CategoryPage(Page):
         for project in sorted(os.listdir(category_dir)):
 
             search_file = os.path.join(category_dir, project, identifier)
-            relative = os.path.join("content", project, identifier)
+            relative = os.path.join("content", path, project, identifier)
 
             if os.path.isfile(search_file):
-                content_list += "<a href=\"" + relative + "\">"
+                content_list += "<li><a href=\"" + relative + "\">"
                 content_list += project
-                content_list += "</a>"
+                content_list += "</a></li>"
 
         self.insert(name, "NAME")
         self.insert(content_list, "CONTENT_LIST")

@@ -100,7 +100,7 @@ def main():
         os.chdir(os.path.join("..", ".."))
 
     if args.transfer is not None:
-        Popen(["rsync", "-av", "output/", args.target]).wait()
+        Popen(["rsync", "-av", "output/", args.transfer]).wait()
 
     if args.cleanup:
         shutil.rmtree("repos")
