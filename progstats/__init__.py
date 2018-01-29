@@ -20,11 +20,6 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 
-print("Content-Type: text/html")
-print()
-
-file_path = os.path.dirname(__file__)
-base = os.path.join(file_path, '..', "resources", "html", "index.html")
-
-with open(base, "r") as f:
-    print(f.read())
+content_path = os.path.join(os.path.dirname(__file__), "content")
+resource_path = os.path.join(os.path.dirname(__file__), "resources")
+template_path = os.path.join(resource_path, "html")

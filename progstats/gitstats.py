@@ -18,17 +18,6 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
+from progstats.objects.CategoryPage import CategoryPage
 
-print("Content-Type: text/html")
-print()
-print("<h1>gitstats</h1>")
-
-content_path = os.path.join(os.path.dirname(__file__), "..", "content")
-gitstats = os.path.join(content_path, "gitstats")
-
-for project in os.listdir(gitstats):
-    project_index = os.path.join(gitstats, project, "index.html")
-
-    if os.path.isfile(project_index):
-        print("<a href=\"" + project_index + "\">" + project + "</a>")
+CategoryPage("gitstats").render()
