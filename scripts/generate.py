@@ -126,7 +126,7 @@ def generate_script(
         for source in source_dest_info:
             dest = source_dest_info[source]
 
-            exts = source.rsplit(",", 1)
+            exts = source.rsplit(".", 1)
             ext = "." + exts[1] if len(exts) == 2 else ""
 
             dest_file = os.path.join("..", "..", "output",
