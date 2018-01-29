@@ -25,16 +25,32 @@ from subprocess import Popen
 
 
 def main():
+    """
+    The main method of this script. Parses the arguments from the command
+    line and processes them.
+
+    The Method starts by cloning the gitlab-cloner script. Using that, all
+    repositories of the user's gitlab account are cloned (or pulled if they
+    already exist). Afterwards, git_stats and gitstats will be run on the
+    repositories. After that, unittest.sh and documentation.sh scripts will
+    be executed if present.
+
+    The resulting outputs will be stored in the "output" directory in the
+    current working directory
+    :return: None
+    """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("url")
-    parser.add_argument("username")
-    parser.add_argument("token")
+    parser.add_argument("url", help="The Gitlab URL to use")
+    parser.add_argument("username", help="The Gitlab username")
+    parser.add_argument("token", help="The Gitlab API token")
+    parser.add_argument("-c", "--cleanup",
+                        help="Deletes all temporary files after the generation"
+                             " completes.")
     args = parser.parse_args()
 
     if os.path.exists("gitlab-cloner"):
         shutil.rmtree("gitlab-cloner")
-
     Popen([
         "git", "clone",
         "https://gitlab.namibsun.net/namboy94/gitlab-cloner.git"
