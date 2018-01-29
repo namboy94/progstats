@@ -30,9 +30,11 @@ deploy_page:
     - develop
   tags:
     - progstats-live
+    - python3
   script:
     - rsync -av ./ /var/www/progstats.namibsun.net/app --delete-after
     - chmod 755 /var/www/progstats.namibsun.net/app/progstats/*
+    - python3 scripts/generate.py https://gitlab.namibsun.net namboy94 $GITLAB_API_KEY -t /var/www/progstats.namibsun.net/app/progstats/content -c
 
 upload_release_to_github:
   stage: release
