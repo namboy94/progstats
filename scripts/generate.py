@@ -44,9 +44,10 @@ def main():
     parser.add_argument("url", help="The Gitlab URL to use")
     parser.add_argument("username", help="The Gitlab username")
     parser.add_argument("token", help="The Gitlab API token")
-    parser.add_argument("-c", "--cleanup",
+    parser.add_argument("-c", "--cleanup", action="store_true",
                         help="Deletes all temporary files after the generation"
                              " completes.")
+    parser.add_argument("-t", "--transfer", help="Specifies an rsync target")
     args = parser.parse_args()
 
     if os.path.exists("gitlab-cloner"):
@@ -90,27 +91,49 @@ def main():
             os.path.join("..", "..", "output", "git_stats", project)
         )
 
-        if os.path.isfile("unittest.sh"):
-            Popen(["bash", "unittest.sh"]).wait()
-            os.rename(
-                "coverage",
-                os.path.join("..", "..", "output", "coverage", project)
-            )
-
-        if os.path.isfile("docgen.sh"):
-            Popen(["bash", "docgen.sh"]).wait()
-            os.rename(
-                "documentation",
-                os.path.join("..", "..", "output", "documentation", project)
-            )
-            if os.path.isfile("documentation.pdf"):
-                os.rename(
-                    "documentation.pdf",
-                    os.path.join("..", "..", "output", "documentation-pdf",
-                                 project + ".pdf")
-                )
+        generate_script("unittest", project, {"coverage": "coverage"})
+        generate_script("docgen", project, {
+            "documentation": "documentation-html",
+            "documentation.pdf": "documentation-pdf"
+        })
 
         os.chdir(os.path.join("..", ".."))
+
+    if args.transfer is not None:
+        Popen(["rsync", "-av", "output/", args.target]).wait()
+
+    if args.cleanup:
+        shutil.rmtree("repos")
+        if args.transfer is not None:
+            shutil.rmtree("output")
+
+
+def generate_script(
+        script_name: str,
+        project_name: str,
+        source_dest_info: dict):
+    """
+    Generates output file using script files
+    :param script_name: The scrip to execute
+    :param project_name: The project name
+    :param source_dest_info: The source and destination information
+    :return: None
+    """
+
+    if os.path.isfile(script_name + ".sh"):
+        Popen(["bash", script_name + ".sh"]).wait()
+
+        for source in source_dest_info:
+            dest = source_dest_info[source]
+
+            exts = source.rsplit(",", 1)
+            ext = "." + exts[1] if len(exts) == 2 else ""
+
+            dest_file = os.path.join("..", "..", "output",
+                                     dest, project_name + ext)
+
+            if os.path.exists(source):
+                os.rename(source, dest_file)
 
 
 if __name__ == "__main__":
