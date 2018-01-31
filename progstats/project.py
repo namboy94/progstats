@@ -20,16 +20,21 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import cgi
 sys.path.insert(0, os.path.abspath(".."))
 
 
 def main():
     """
-    Displays the index page
+    Displays the project page
     :return: None
     """
-    from progstats.pages.ProjectsPage import ProjectsPage
-    ProjectPage().render()
+    from progstats.pages.ProjectPage import ProjectPage
+    try:
+        args = cgi.FieldStorage()
+        ProjectPage(args["name"].value).render()
+    except KeyError:
+        ProjectPage().render()
 
 
 if __name__ == "__main__":

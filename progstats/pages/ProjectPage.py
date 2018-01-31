@@ -18,73 +18,33 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
 from progstats.pages.Page import Page
-from progstats import content_path
+from progstats.pages.ProjectsPage import ProjectsPage
 
 
 class ProjectPage(Page):
     """
-    Page that lists the projects in a table
+    Page that either lists all projects or shows all stats for a project
     """
 
-    def __init__(self):
-        super().__init__("projects")
-        content = self.traverse_content()
+    def __init__(self, project_name: str = None):
+        super().__init__("project")
 
-        table_header = "<tr><th>Project</th>"
-        categories = list(sorted(os.listdir(content_path)))
-        for category in categories:
-            table_header += "<th>" + category + "</th>"
+        project_data = ProjectsPage.traverse_content()
+        html_data = "<ul>"
 
-        self.insert(table_header, "TABLE_HEADER")
+        if project_name is None or project_name not in project_data:
+            self.insert("All Projects", "PROJECT_NAME")
+            for project in sorted(project_data.keys()):
+                html_data += "<li><a href=\"project.py?name=" + project + "\">"
+                html_data += project + "</a></li>"
 
-        table_rows = ""
+        else:
+            self.insert(project_name, "PROJECT_NAME")
+            project = project_data[project_name]
+            for category in sorted(project.keys()):
+                html_data += "<li><a href=\"" + project[category] + "\">"
+                html_data += category + "</a></li>"
 
-        for project_name in sorted(content.keys()):
-            project_data = content[project_name]
-
-            table_rows += "<tr><th>" + project_name + "</th>"
-
-            for category in categories:
-                table_rows += "<th>"
-
-                if category in project_data:
-                    table_rows += "<a href=\"" + project_data[category]
-                    table_rows += "\">Link</a>"
-                else:
-                    table_rows += "N/A"
-
-                table_rows += "</th>"
-
-        self.insert(table_rows, "TABLE_ROWS")
-
-    # noinspection PyMethodMayBeStatic
-    def traverse_content(self) -> dict:
-        project_data = {}
-
-        for category in os.listdir(content_path):
-            for project in os.listdir(os.path.join(content_path, category)):
-
-                if project.startswith("."):
-                    continue
-
-                project_path = os.path.join(content_path, category, project)
-                project_rel_path = os.path.join("content", category, project)
-
-                if os.path.isfile(project_path):
-                    project_name = project.rsplit(".", 1)[0]
-                else:
-                    project_name = project
-
-                if project_name not in project_data:
-                    project_data[project_name] = {}
-
-                if os.path.isfile(os.path.join(project_path, "index.html")):
-                    project_data[project][category] =\
-                        os.path.join(project_rel_path, "index.html")
-
-                elif os.path.isfile(project_path):
-                    project_data[project][category] = project_rel_path
-
-        return project_data
+        html_data += "</ul>"
+        self.insert(html_data, "CONTENT")
