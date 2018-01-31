@@ -15,4 +15,4 @@ of gitlab projects.
 * [License (GPLv3)](https://gitlab.namibsun.net/namboy94/progstats/raw/master/LICENSE)
 * [Gitlab](https://gitlab.namibsun.net/namboy94/progstats)
 * [Github](https://github.com/namboy94/progstats)
-* [Progstats](https://progstats.namibsun.net/project.py?user=namboy94&repository=progstats)
+* [Progstats](https://progstats.namibsun.net/project.py?name=progstats)
