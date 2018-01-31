@@ -70,7 +70,7 @@ def main():
         os.makedirs(directory)
 
     Popen([
-        "python",
+        "python3",
         "gitlab-cloner/gitlab-cloner.py",
         "-d", "repos",
         args.url, args.username, args.token
