@@ -18,7 +18,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ def index():
     The Home page of the website. Will display the /project/ page.
     :return: The /projects/ page
     """
-    return os.environ["PROGSTATS_DATA"]
+    return str(os.environ)
 
 
 @app.route("/projects/")
@@ -38,7 +38,7 @@ def projects():
     Lists all projects.
     :return: An HTML document containing a list of projects
     """
-    return "projects"
+    return str(request.environ)
 
 
 @app.route("/projects/<project_name>")
