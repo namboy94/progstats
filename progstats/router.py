@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 from flask import Flask
 
 app = Flask(__name__)
@@ -28,7 +29,7 @@ def index():
     The Home page of the website. Will display the /project/ page.
     :return: The /projects/ page
     """
-    return projects()
+    return os.path.expanduser("~")
 
 
 @app.route("/projects/")
