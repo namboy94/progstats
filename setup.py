@@ -18,7 +18,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # imports
-from progstats.version import version
+from progstats import version
 from setuptools import setup, find_packages
 
 

@@ -21,4 +21,4 @@ activate = '/path/to/env/bin/activate'
 with open(activate, "r") as f:
     exec(f.read(), dict(__file__=activate)
 
-from progstats import app as application
+from progstats.router import app as application
