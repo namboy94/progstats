@@ -1,0 +1,70 @@
+"""
+Copyright 2018 Hermann Krumrey
+
+This file is part of progstats.
+
+progstats is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+progstats is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with progstats.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+import os
+from typing import List
+from progstats.entities.Project import Project
+from progstats.entities.Topic import Topic, TopicType
+
+data_dir = os.environ["PROGSTATS_DATA"]
+
+
+def get_topics() -> List[Topic]:
+    """
+    Retrieves a list of all available topics
+    :return: The list of topics
+    """
+
+    topics = []
+    for topic in os.listdir(data_dir):
+
+        if topic.startswith("."):
+            continue
+
+        for topic_type in TopicType:
+            if topic_type.value[0] == topic:
+                topics.append(Topic(data_dir, topic_type))
+    return topics
+
+
+def get_projects() -> List[Project]:
+    """
+    Retrieves a list of all projects
+    :return: The list of projects
+    """
+
+    topics = get_topics()
+    projects = {}
+
+    for topic in topics:
+        for project_name in os.listdir(topic.path):
+
+            if project_name.startswith("."):
+                continue
+
+            if project_name in projects:
+                projects[project_name].add_topic(topic)
+            else:
+                projects[project_name] = Project(project_name, [topic])
+
+    project_list = []
+    for x in projects:
+        project_list.append(projects[x])
+
+    return project_list

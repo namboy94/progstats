@@ -19,6 +19,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from flask import Flask
+from progstats.entities import get_topics, get_projects
 
 app = Flask(__name__)
 
@@ -38,7 +39,11 @@ def projects():
     Lists all projects.
     :return: An HTML document containing a list of projects
     """
-    return str(os.environ)
+    _projects = get_projects()
+    x = ""
+    for p in _projects:
+        x += p.name + "\n\n"
+    return x
 
 
 @app.route("/projects/<project_name>")
