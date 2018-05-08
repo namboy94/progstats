@@ -29,7 +29,7 @@ def index():
     The Home page of the website. Will display the /project/ page.
     :return: The /projects/ page
     """
-    return os.path.expanduser("~")
+    return os.environ["PROGSTATS_DATA"]
 
 
 @app.route("/projects/")
