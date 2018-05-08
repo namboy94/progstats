@@ -22,24 +22,26 @@ from progstats import version
 from setuptools import setup, find_packages
 
 
-setup(
-    name="progstats",
-    version=version,
-    description="An website that display programming stats",
-    long_description=open("README.md").read(),
-    classifiers=[
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
-    ],
-    url="https://gitlab.namibsun.net/namboy94/progstats",
-    download_url="https://gitlab.namibsun.net/namboy94/progstats/"
-                 "repository/archive.zip?ref=master",
-    author="Hermann Krumrey",
-    author_email="hermann@krumreyh.com",
-    license="GNU GPL3",
-    packages=find_packages(),
-    include_package_data=True,
-    install_requires=["flask"],
-    test_suite='nose.collector',
-    tests_require=['nose'],
-    zip_safe=False
-)
+if __name__ == "__main__":
+
+    setup(
+        name="progstats",
+        version=version,
+        description="An website that display programming stats",
+        long_description=open("README.md").read(),
+        classifiers=[
+            "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+        ],
+        url="https://gitlab.namibsun.net/namboy94/progstats",
+        download_url="https://gitlab.namibsun.net/namboy94/progstats/"
+                     "repository/archive.zip?ref=master",
+        author="Hermann Krumrey",
+        author_email="hermann@krumreyh.com",
+        license="GNU GPL3",
+        packages=find_packages(),
+        include_package_data=True,
+        install_requires=["flask"],
+        test_suite='nose.collector',
+        tests_require=['nose'],
+        zip_safe=False
+    )

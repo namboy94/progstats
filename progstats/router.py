@@ -18,7 +18,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-from flask import Flask, request
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -38,7 +38,7 @@ def projects():
     Lists all projects.
     :return: An HTML document containing a list of projects
     """
-    return str(request.environ)
+    return str(os.environ)
 
 
 @app.route("/projects/<project_name>")
