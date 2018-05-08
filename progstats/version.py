@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Copyright 2018 Hermann Krumrey
 
@@ -18,25 +17,4 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import sys
-import cgi
-sys.path.insert(0, os.path.abspath(".."))
-
-
-def main():
-    """
-    Displays the category page
-    :return: None
-    """
-    try:
-        args = cgi.FieldStorage()
-        from progstats.pages.CategoryPage import CategoryPage
-        CategoryPage(args["name"].value, args["path"].value).render()
-    except KeyError:
-        from progstats.pages.IndexPage import IndexPage
-        IndexPage().render()
-
-
-if __name__ == "__main__":
-    main()
+version = "0.0.1"

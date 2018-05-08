@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Copyright 2018 Hermann Krumrey
 
@@ -18,8 +17,4 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-
-content_path = os.path.join(os.path.dirname(__file__), "content")
-resource_path = os.path.join(os.path.dirname(__file__), "resources")
-template_path = os.path.join(resource_path, "html")
+from progstats.router import app

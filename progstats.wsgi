@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Copyright 2018 Hermann Krumrey
 
@@ -18,19 +17,8 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import sys
-sys.path.insert(0, os.path.abspath(".."))
+activate = '/path/to/env/bin/activate'
+with open(activate, "r") as f:
+    exec(f.read(), dict(__file__=activate)
 
-
-def main():
-    """
-    Displays the index page
-    :return: None
-    """
-    from progstats.pages.ProjectsPage import ProjectsPage
-    ProjectPage().render()
-
-
-if __name__ == "__main__":
-    main()
+from progstats import app as application
