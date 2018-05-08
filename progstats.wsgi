@@ -17,8 +17,4 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-activate = '/path/to/env/bin/activate'
-with open(activate, "r") as f:
-    exec(f.read(), dict(__file__=activate)
-
 from progstats.router import app as application
