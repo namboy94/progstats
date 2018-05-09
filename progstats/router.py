@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-from flask import Flask
+from flask import Flask, render_template, abort, request
 from progstats.entities import get_topics, get_projects
 
 app = Flask(__name__)
@@ -30,46 +29,64 @@ def index():
     The Home page of the website. Will display the /project/ page.
     :return: The /projects/ page
     """
-    return str(os.environ)
+    return render_template("home.html")
 
 
 @app.route("/projects/")
-def projects():
-    """
-    Lists all projects.
-    :return: An HTML document containing a list of projects
-    """
-    _projects = get_projects()
-    x = ""
-    for p in _projects:
-        x += p.name + "\n\n"
-    return x
-
-
 @app.route("/projects/<project_name>")
-def project(project_name: str):
+def projects(project_name: str = None):
     """
-    Displays details about a single project
-    :param project_name: The name of the project
-    :return: The project's page
+    Lists all projects or displays details about a single project
+    :param project_name: The name of the project to display.
+    :return: An HTML document containing a list of projects
+             or the details of the selected project
     """
-    return project_name
+    all_projects = get_projects()
+    if project_name is None:
+        return render_template(
+            "lister.html", lister_type="Projects", items=all_projects
+        )
+
+    else:
+        filtered = list(filter(lambda x: x.name == project_name, all_projects))
+        if len(filtered) != 1:
+            abort(404)
+        else:
+            return render_template(
+                "project.html", host=request.host_url, project=filtered[0]
+            )
 
 
 @app.route("/topics/")
-def topics():
-    """
-    Displays a list of all available topics
-    :return: The page containing all available topics
-    """
-    return "topics"
-
-
 @app.route("/topics/<topic_name>")
-def topic(topic_name: str):
+def topics(topic_name: str = None):
     """
-    Displays a list of projects that offer info on a topic
-    :param topic_name: The name of the topic
-    :return: The topic's list of projects
+    Displays a list of all available topics or a list of projects that
+    offer info on a specified topic
+    :param topic_name: The name of the topic to display
+    :return: The page containing all available topics or the projects
+             applicable to a topic
     """
-    return topic_name
+    all_topics = get_topics()
+    if topic_name is None:
+        return render_template(
+            "lister.html", lister_type="Topics", items=all_topics
+        )
+
+    else:
+        filtered = list(filter(lambda x: x.name == topic_name, all_topics))
+
+        if len(filtered) != 1:
+            abort(404)
+        else:
+            topic = filtered[0]
+            topic_projects = list(filter(
+                lambda x: topic in x.topics,
+                get_projects()
+            ))
+            return topic.name
+
+
+@app.route("/test")
+def test():
+    return request.host_url.rsplit(":", 1)[0]

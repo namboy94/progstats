@@ -19,6 +19,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from enum import Enum
+from flask import abort
 
 
 class TopicType(Enum):
@@ -52,8 +53,11 @@ class Topic:
         :param project_name: The name of the project
         :return: The path to the resource
         """
+        if project_name == "":
+            abort(404)
+
         return os.path.join(
-            self.path,
+            self.name,
             self.target.replace("@{project}", project_name)
         )
 

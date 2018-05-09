@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 from typing import List
 from progstats.entities.Topic import Topic
 
@@ -35,19 +36,24 @@ class Project:
         self.name = name
         self.topics = topics
 
-    def get_target(self, topic: Topic) -> str or None:
+    def get_target(self, host: str, topic: Topic) -> str or None:
         """
-        Generates the target path to the data resource for a specified topic
+        Generates the target URL to the data resource for a specified topic
+        :param host: The host's root URL
         :param topic: The topic to generate the target path for
         :return: The generated path, or None if the specified topic does not
                  apply to this project
         """
         if topic not in self.topics:
-            return None
+            return
 
         else:
-            target = topic.generate_path(self.name)
-            return target
+            print(host)
+            return os.path.join(
+                host,
+                "data",
+                topic.generate_path(self.name)
+            )
 
     def add_topic(self, topic: Topic):
         """
