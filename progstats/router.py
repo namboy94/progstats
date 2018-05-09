@@ -84,7 +84,13 @@ def topics(topic_name: str = None):
                 lambda x: topic in x.topics,
                 get_projects()
             ))
-            return topic.name
+            print(topic_projects)
+            return render_template(
+                "topic.html",
+                topic=topic,
+                projects=topic_projects,
+                host=request.host_url
+            )
 
 
 @app.route("/test")
