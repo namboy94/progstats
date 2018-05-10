@@ -71,7 +71,7 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 
 def setup(app) -> None:
     """
-    Registers an autodoc between listener to igore License texts
+    Registers an autodoc between listener to ignore License texts
 
     :param app: The sphinx app
     :return:    None

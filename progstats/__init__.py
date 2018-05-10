@@ -1,4 +1,4 @@
-"""
+"""LICENSE
 Copyright 2018 Hermann Krumrey
 
 This file is part of progstats.
@@ -15,6 +15,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
-"""
+LICENSE"""
 
-version = "0.0.1"
+version = "1.0.0"

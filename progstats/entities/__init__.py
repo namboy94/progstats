@@ -1,4 +1,4 @@
-"""
+"""LICENSE
 Copyright 2018 Hermann Krumrey
 
 This file is part of progstats.
@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
-"""
+LICENSE"""
 
 import os
 from typing import List
@@ -57,6 +57,8 @@ def get_projects() -> List[Project]:
 
             if project_name.startswith("."):
                 continue
+            if project_name.endswith(".pdf"):
+                project_name = project_name.rsplit(".pdf", 1)[0]
 
             if project_name in projects:
                 projects[project_name].add_topic(topic)
