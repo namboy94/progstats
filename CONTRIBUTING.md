@@ -13,7 +13,7 @@ remain the author's.
 **Style**
 
 We feel that a unified coding style is important, which is why we require a linter to
-be used. In this case **pycodestyle** is used. Code must pass pep8's tests.
+be used. In this case **pycodestyle** is used. Code must pass pycodestyle's tests.
 
 **Documentation**
 
