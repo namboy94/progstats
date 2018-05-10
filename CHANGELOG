@@ -1,3 +1,5 @@
+V 1.0.5:
+  - Fixed Github and Gitlab uploading
 V 1.0.4:
   - Fixed PyPi distribution - once more
 V 1.0.3:
