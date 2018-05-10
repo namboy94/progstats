@@ -58,8 +58,8 @@ pypi_dist:
     - python3
   script:
     - echo "$PYPIRC" > ~/.pypirc
-    - python3 setup.py register sdist upload
-    - python3 setup.py bdist_wheel upload
+    - python3 setup.py bdist_wheel sdist
+    - twine upload dist/*
 
 upload_release_to_github:
   stage: release
