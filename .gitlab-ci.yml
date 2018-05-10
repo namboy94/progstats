@@ -53,7 +53,6 @@ pypi_dist:
   stage: deploy
   only:
     - master
-    - develop
   tags:
     - python3
   script:
