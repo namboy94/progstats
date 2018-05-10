@@ -9,6 +9,9 @@
 A Website that categorizes the git statistics, documentation and code coverage
 of gitlab projects.
 
+A live version is running at
+[progstats.namibsun.net](https://progstats.namibsun.net)
+
 ## Further Information
 
 * [Changelog](https://gitlab.namibsun.net/namboy94/progstats/raw/master/CHANGELOG)

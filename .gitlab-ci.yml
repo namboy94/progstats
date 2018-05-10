@@ -54,12 +54,12 @@ upload_release_to_github:
   only:
     - master
   tags:
-    - python
+    - python3
   script:
     - mkdir -p artifacts
     - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
-    - python ci-scripts/progstats/changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
-    - python ci-scripts/progstats/github-release-uploader/github-release-uploader.py namboy94 progstats $GITHUB_ACCESS_TOKEN
+    - python3 ci-scripts/progstats/changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
+    - python3 ci-scripts/progstats/github-release-uploader/github-release-uploader.py namboy94 progstats $GITHUB_ACCESS_TOKEN
       $(python3 setup.py -V) current_changelog artifacts -b master
 
 upload_release_to_gitlab:
@@ -67,12 +67,12 @@ upload_release_to_gitlab:
   only:
     - master
   tags:
-    - python
+    - python3
   script:
     - mkdir -p artifacts
     - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
-    - python ci-scripts/progstats/changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
-    - python ci-scripts/progstats/gitlab-release-uploader/gitlab-release-uploader.py namboy94 progstats $GITLAB_ACCESS_TOKEN
+    - python3 ci-scripts/progstats/changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
+    - python3 ci-scripts/progstats/gitlab-release-uploader/gitlab-release-uploader.py namboy94 progstats $GITLAB_ACCESS_TOKEN
       $(python3 setup.py -V) current_changelog artifacts -b master -u https://gitlab.namibsun.net
 
 generate_sphinx_documentation:

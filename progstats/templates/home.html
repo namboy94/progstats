@@ -18,13 +18,11 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {% include "header.html" %}
     <title>progstats</title>
-    <!--suppress HtmlUnknownTarget -->
-    <link rel=stylesheet type=text/css
-          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -33,11 +31,9 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 
     <ul>
         <li>
-            <!--suppress HtmlUnknownTarget -->
             <a href="{{ url_for('projects')}}">Projects</a>
         </li>
         <li>
-            <!--suppress HtmlUnknownTarget -->
             <a href="{{ url_for('topics') }}">Topics</a>
         </li>
     </ul>

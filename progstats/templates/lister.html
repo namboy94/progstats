@@ -17,13 +17,11 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {% include "header.html" %}
     <title>progstats | {{ lister_type }}</title>
-    <!--suppress HtmlUnknownTarget -->
-    <link rel=stylesheet type=text/css
-          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -32,7 +30,6 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
     <ul>
         {% for item in items %}
         <li>
-            <!--suppress HtmlUnknownTarget -->
             <a href="{{ item.name }}">{{ item.name }}</a>
         </li>
         {% endfor %}
