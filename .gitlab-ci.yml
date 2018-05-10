@@ -82,15 +82,13 @@ generate_sphinx_documentation:
     - develop
   tags:
     - python3
-    - sphinx
     - latex
     - progstats-live
   script:
     - python3 -m venv virtual
     - source virtual/bin/activate
-    - pip list
     - python3 setup.py install
-    - pip list
+    - pip install sphinx sphinx_rtd_theme
     - cd doc
     - make buildsource
     - make latexpdf
