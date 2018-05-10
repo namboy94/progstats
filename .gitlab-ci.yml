@@ -86,13 +86,11 @@ generate_sphinx_documentation:
     - latex
     - progstats-live
   script:
-    - python -V
-    - python3 -V
     - python3 -m venv virtual
     - source virtual/bin/activate
-    - python -V
-    - python3 -V
+    - pip list
     - python3 setup.py install
+    - pip list
     - cd doc
     - make buildsource
     - make latexpdf
