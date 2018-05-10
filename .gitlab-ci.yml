@@ -28,6 +28,7 @@ run_unit_tests_with_coverage:
   stage: test
   tags:
     - python3
+    - progstats-live
   script:
     - python3 setup.py nosetests -v --with-coverage --cover-package=progstats --cover-branches --cover-erase --cover-html --cover-inclusive
     - rsync -av cover/ /var/www/progstats.namibsun.net/data/coverage/progstats --delete-before
@@ -83,7 +84,7 @@ generate_sphinx_documentation:
   tags:
     - sphinx
     - latex
-    - docs
+    - progstats-live
   script:
     - cd doc
     - make buildsource
