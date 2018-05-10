@@ -39,6 +39,7 @@ def get_topics() -> List[Topic]:
         for topic_type in TopicType:
             if topic_type.value[0] == topic:
                 topics.append(Topic(data_dir, topic_type))
+    topics.sort(key=lambda x: x.name)
     return topics
 
 
@@ -63,7 +64,8 @@ def get_projects() -> List[Project]:
                 projects[project_name] = Project(project_name, [topic])
 
     project_list = []
-    for x in projects:
-        project_list.append(projects[x])
+    for project in projects:
+        project_list.append(projects[project])
 
+    project_list.sort(key=lambda x: x.name)
     return project_list

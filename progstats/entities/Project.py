@@ -35,6 +35,7 @@ class Project:
         """
         self.name = name
         self.topics = topics
+        self.topics.sort(key=lambda x: x.name)
 
     def get_target(self, host: str, topic: Topic) -> str or None:
         """
@@ -48,7 +49,6 @@ class Project:
             return
 
         else:
-            print(host)
             return os.path.join(
                 host,
                 "data",
@@ -63,6 +63,7 @@ class Project:
         """
         if topic not in self.topics:
             self.topics.append(topic)
+        self.topics.sort(key=lambda x: x.name)
 
     def __eq__(self, other):
         """

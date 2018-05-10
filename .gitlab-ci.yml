@@ -79,6 +79,7 @@ generate_sphinx_documentation:
   stage: docs
   only:
     - master
+    - develop
   tags:
     - sphinx
     - latex
