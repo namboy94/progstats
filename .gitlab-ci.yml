@@ -49,6 +49,17 @@ deploy_page:
     - rsync -av virtual /var/www/progstats.namibsun.net/ --delete-after
     - rsync -av progstats.wsgi /var/www/progstats.namibsun.net/
 
+pypi_dist:
+  stage: deploy
+  only:
+    - master
+  tags:
+    - python3
+    - pypi
+  script:
+    - python3 setup.py register sdist upload
+    - python3 setup.py bdist_wheel upload
+
 upload_release_to_github:
   stage: release
   only:
