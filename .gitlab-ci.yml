@@ -50,7 +50,7 @@ deploy_page:
     - rsync -av progstats.wsgi /var/www/progstats.namibsun.net/
 
 pypi_dist:
-  stage: deploy
+  stage: release
   only:
     - master
   tags:
