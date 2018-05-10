@@ -22,14 +22,13 @@ from typing import List
 from progstats.entities.Project import Project
 from progstats.entities.Topic import Topic, TopicType
 
-data_dir = os.environ["PROGSTATS_DATA"]
-
 
 def get_topics() -> List[Topic]:
     """
     Retrieves a list of all available topics
     :return: The list of topics
     """
+    data_dir = os.environ["PROGSTATS_DATA"]
 
     topics = []
     for topic in os.listdir(data_dir):

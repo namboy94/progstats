@@ -59,10 +59,7 @@ def main():
 
     for category in [
         "gitstats",
-        "git_stats",
-        "coverage",
-        "documentation-pdf",
-        "documentation-pdf-pdf"
+        "git_stats"
     ]:
         directory = os.path.join("output", category)
         if os.path.exists(directory):
@@ -91,12 +88,6 @@ def main():
             os.path.join("..", "..", "output", "git_stats", project)
         )
 
-        generate_script("unittest", project, {"coverage": "coverage"})
-        generate_script("docgen", project, {
-            "documentation": "documentation-html",
-            "documentation.pdf": "documentation-pdf"
-        })
-
         os.chdir(os.path.join("..", ".."))
 
     if args.transfer is not None:
@@ -106,34 +97,6 @@ def main():
         shutil.rmtree("repos")
         if args.transfer is not None:
             shutil.rmtree("output")
-
-
-def generate_script(
-        script_name: str,
-        project_name: str,
-        source_dest_info: dict):
-    """
-    Generates output file using script files
-    :param script_name: The scrip to execute
-    :param project_name: The project name
-    :param source_dest_info: The source and destination information
-    :return: None
-    """
-
-    if os.path.isfile(script_name + ".sh"):
-        Popen(["bash", script_name + ".sh"]).wait()
-
-        for source in source_dest_info:
-            dest = source_dest_info[source]
-
-            exts = source.rsplit(".", 1)
-            ext = "." + exts[1] if len(exts) == 2 else ""
-
-            dest_file = os.path.join("..", "..", "output",
-                                     dest, project_name + ext)
-
-            if os.path.exists(source):
-                os.rename(source, dest_file)
 
 
 if __name__ == "__main__":

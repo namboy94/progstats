@@ -21,7 +21,9 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 <head>
     <meta charset="UTF-8">
     <title>progstats | {{ lister_type }}</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <!--suppress HtmlUnknownTarget -->
+    <link rel=stylesheet type=text/css
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -30,6 +32,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
     <ul>
         {% for item in items %}
         <li>
+            <!--suppress HtmlUnknownTarget -->
             <a href="{{ item.name }}">{{ item.name }}</a>
         </li>
         {% endfor %}

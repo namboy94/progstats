@@ -3,6 +3,7 @@ stages:
   - test
   - deploy
   - release
+  - docs
 
 github_mirror:
   stage: mirror
@@ -22,6 +23,14 @@ stylecheck:
     - pycodestyle
   script:
     - pycodestyle .
+    
+run_unit_tests_with_coverage:
+  stage: test
+  tags:
+    - python3
+  script:
+    - python3 setup.py nosetests -v --with-coverage --cover-package=progstats --cover-branches --cover-erase --cover-html --cover-inclusive
+    - rsync -av cover/ /var/www/progstats.namibsun.net/data/coverage/progstats --delete-before
 
 deploy_page:
   stage: deploy
@@ -65,3 +74,20 @@ upload_release_to_gitlab:
     - python ci-scripts/progstats/changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
     - python ci-scripts/progstats/gitlab-release-uploader/gitlab-release-uploader.py namboy94 progstats $GITLAB_ACCESS_TOKEN
       $(python3 setup.py -V) current_changelog artifacts -b master -u https://gitlab.namibsun.net
+
+generate_sphinx_documentation:
+  stage: docs
+  only:
+    - master
+  tags:
+    - sphinx
+    - latex
+    - docs
+  script:
+    - cd doc
+    - make buildsource
+    - make latexpdf
+    - make html
+    - rsync -av build/latex/progstats.pdf /var/www/progstats.namibsun.net/data/doc_pdf/progstats.pdf --delete-before
+    - rsync -av build/html/ /var/www/progstats.namibsun.net/data/doc_html/progstats --delete-before
+    - cd ..

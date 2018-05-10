@@ -22,7 +22,9 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 <head>
     <meta charset="UTF-8">
     <title>progstats</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <!--suppress HtmlUnknownTarget -->
+    <link rel=stylesheet type=text/css
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -31,9 +33,11 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 
     <ul>
         <li>
+            <!--suppress HtmlUnknownTarget -->
             <a href="{{ url_for('projects')}}">Projects</a>
         </li>
         <li>
+            <!--suppress HtmlUnknownTarget -->
             <a href="{{ url_for('topics') }}">Topics</a>
         </li>
     </ul>

@@ -21,7 +21,9 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 <head>
     <meta charset="UTF-8">
     <title>progstats | {{ project.name }}</title>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <!--suppress HtmlUnknownTarget -->
+    <link rel=stylesheet type=text/css
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -30,7 +32,10 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
     <ul>
         {% for topic in project.topics %}
         <li>
-            <a href="{{ project.get_target(host, topic) }}">{{ topic.name }}</a>
+            <!--suppress HtmlUnknownTarget -->
+            <a href="{{ project.get_target(host, topic) }}">
+                {{ topic.name }}
+            </a>
         </li>
         {% endfor %}
     </ul>
