@@ -17,4 +17,4 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-version = "1.0.0"
+version = "1.0.2"

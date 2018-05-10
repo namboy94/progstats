@@ -1,2 +1,6 @@
+V 1.0.2:
+  - Fixed PyPi distribution
+V 1.0.1:
+  - Tested PyPi distribution
 V 1.0.0:
   - Implemented basic structure

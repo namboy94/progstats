@@ -53,12 +53,13 @@ pypi_dist:
   stage: deploy
   only:
     - master
+    - develop
   tags:
     - python3
-    - pypi
   script:
-    - python3 setup.py register sdist upload
-    - python3 setup.py bdist_wheel upload
+    - echo "$PYPIRC" > ~/.pypirc
+    - python3 setup.py bdist_wheel sdist
+    - twine upload dist/*
 
 upload_release_to_github:
   stage: release
