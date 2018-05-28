@@ -1,5 +1,5 @@
 """LICENSE
-Copyright 2018 Hermann Krumrey
+Copyright 2018 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of progstats.
 

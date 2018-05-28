@@ -1,5 +1,5 @@
 """LICENSE
-Copyright 2018 Hermann Krumrey
+Copyright 2018 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of progstats.
 
@@ -18,7 +18,6 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 # imports
-from progstats import version
 from setuptools import setup, find_packages
 
 
@@ -26,22 +25,20 @@ if __name__ == "__main__":
 
     setup(
         name="progstats",
-        version=version,
-        description="An website that display programming stats",
-        long_description=open("README.md").read(),
+        version=open("version", "r").read(),
+        description="A website indexing git statistics, code coverage and "
+                    "documentation for programming projects",
+        long_description=open("README.md", "r").read(),
+        long_description_content_type="text/markdown",
         classifiers=[
             "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
         ],
-        url="https://gitlab.namibsun.net/namboy94/progstats",
-        download_url="https://gitlab.namibsun.net/namboy94/progstats/"
-                     "repository/archive.zip?ref=master",
+        url="https://gitlab.namibsun.net/namibsun/python/progstats",
         author="Hermann Krumrey",
         author_email="hermann@krumreyh.com",
         license="GNU GPL3",
         packages=find_packages(),
-        include_package_data=True,
         install_requires=["flask"],
-        test_suite='nose.collector',
-        tests_require=['nose'],
+        include_package_data=True,
         zip_safe=False
     )

@@ -2,7 +2,7 @@
 
 |master|develop|
 |:---:|:---:|
-|[![build status](https://gitlab.namibsun.net/namboy94/progstats/badges/master/build.svg)](https://gitlab.namibsun.net/namboy94/progstats/commits/master)|[![build status](https://gitlab.namibsun.net/namboy94/progstats/badges/develop/build.svg)](https://gitlab.namibsun.net/namboy94/progstats/commits/develop)|
+|[![build status](https://gitlab.namibsun.net/namibsun/python/progstats/badges/master/build.svg)](https://gitlab.namibsun.net/namibsun/python/progstats/commits/master)|[![build status](https://gitlab.namibsun.net/namibsun/python/progstats/badges/develop/build.svg)](https://gitlab.namibsun.net/namibsun/python/progstats/commits/develop)|
 
 ![Logo](resources/logo/logo-readme.png)
 
@@ -30,9 +30,9 @@ vhost configuration file. A template for a vhost config file is
 
 ## Further Information
 
-* [Changelog](https://gitlab.namibsun.net/namboy94/progstats/raw/master/CHANGELOG)
-* [License (GPLv3)](https://gitlab.namibsun.net/namboy94/progstats/raw/master/LICENSE)
-* [Gitlab](https://gitlab.namibsun.net/namboy94/progstats)
+* [Changelog](CHANGELOG)
+* [License (GPLv3)](LICENSE)
+* [Gitlab](https://gitlab.namibsun.net/namibsun/python/progstats)
 * [Github](https://github.com/namboy94/progstats)
-* [Python Package Index Site](https://pypi.org/project/progstats/)
 * [Progstats](https://progstats.namibsun.net/projects/progstats)
+* [PyPi](https://pypi.org/project/progstats)
