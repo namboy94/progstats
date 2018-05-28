@@ -1,37 +1,25 @@
 stages:
-  - mirror
   - test
+  - stats
   - deploy
   - release
-  - docs
-
-github_mirror:
-  stage: mirror
-  tags:
-    - github_namboy94_push
-  script:
-    - git checkout master
-    - git pull
-    - git push git@github.com:namboy94/progstats.git master -f
-    - git checkout develop
-    - git pull
-    - git push git@github.com:namboy94/progstats.git develop -f
 
 stylecheck:
   stage: test
   tags:
-    - pycodestyle
+    - python3
   script:
-    - pycodestyle .
-    
-run_unit_tests_with_coverage:
+    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
+    - python-codestyle-check
+
+unittest:
   stage: test
   tags:
     - python3
-    - progstats-live
+    - progstats
   script:
-    - python3 setup.py nosetests -v --with-coverage --cover-package=progstats --cover-branches --cover-erase --cover-html --cover-inclusive
-    - rsync -av cover/ /var/www/progstats.namibsun.net/data/coverage/progstats --delete-before
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - python-unittest
 
 deploy_page:
   stage: deploy
@@ -39,72 +27,49 @@ deploy_page:
     - master
     - develop
   tags:
-    - progstats-live
     - python3
+    - progstats
   script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - python3 setup.py install
-    - deactivate
-    - rsync -av virtual /var/www/progstats.namibsun.net/ --delete-after
-    - rsync -av progstats.wsgi /var/www/progstats.namibsun.net/
+    - python3 -m venv virtual && source virtual/bin/activate && python3 setup.py install
+    - rsync -av virtual $PROGSTATS_HOME --delete-after
+    - rsync -av progstats.wsgi $PROGSTATS_HOME
 
-pypi_dist:
+release_upload:
   stage: release
   only:
     - master
   tags:
     - python3
   script:
-    - echo "$PYPIRC" > ~/.pypirc
-    - python3 setup.py bdist_wheel sdist
-    - twine upload dist/*
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - github-release-upload $(cat version) "$(changelog-reader)"
+    - gitlab-release-upload $(cat version) "$(changelog-reader)"
 
-upload_release_to_github:
+pypi_upload:
   stage: release
   only:
     - master
   tags:
     - python3
   script:
-    - mkdir -p artifacts
-    - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
-    - python3 ci-scripts/src/changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
-    - python3 ci-scripts/src/github-release-uploader/github-release-uploader.py namboy94 progstats $GITHUB_ACCESS_TOKEN
-      $(python3 setup.py -V) current_changelog artifacts -b master
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - pypi-upload
 
-upload_release_to_gitlab:
-  stage: release
-  only:
-    - master
+gitstats:
+  stage: stats
   tags:
     - python3
+    - gitstats
+    - progstats
   script:
-    - mkdir -p artifacts
-    - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
-    - python3 ci-scripts/src/changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
-    - python3 ci-scripts/src/gitlab-release-uploader/gitlab-release-uploader.py namboy94 progstats $GITLAB_ACCESS_TOKEN
-      $(python3 setup.py -V) current_changelog artifacts -b master -u https://gitlab.namibsun.net
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - gitstats-gen
 
-generate_sphinx_documentation:
-  stage: docs
-  only:
-    - master
-    - develop
+docgen:
+  stage: stats
   tags:
     - python3
-    - latex
-    - progstats-live
+    - progstats
   script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - python3 setup.py install
-    - pip install sphinx sphinx_rtd_theme
-    - cd doc
-    - make buildsource
-    - make latexpdf
-    - make html
-    - rsync -av build/latex/progstats.pdf /var/www/progstats.namibsun.net/data/doc_pdf/progstats.pdf --delete-before
-    - rsync -av build/html/ /var/www/progstats.namibsun.net/data/doc_html/progstats --delete-before
-    - cd ..
-    - deactivate
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - sphinx-docgen
