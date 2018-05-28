@@ -1,3 +1,5 @@
+V 1.0.8:
+  - Fixed ci-scripts installation calls
 V 1.0.7:
   - Actually updated the version number
 V 1.0.6:
