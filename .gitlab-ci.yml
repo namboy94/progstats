@@ -30,7 +30,9 @@ deploy_page:
     - python3
     - progstats
   script:
+    - rm -rf virtual
     - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - deactivate
     - rsync -av virtual $PROGSTATS_HOME --delete-after
     - rsync -av progstats.wsgi $PROGSTATS_HOME
 
