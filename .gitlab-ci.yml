@@ -10,20 +10,13 @@ default:
     - apt update
     - apt install rsync ssh -y
     - pip install ci-scripts
-    - echo $SERVER_ACCESS_KEY > id_rsa
+    - echo "$SERVER_ACCESS_KEY" > id_rsa
 
 stylecheck:
   stage: test
   tags: [docker]
   script:
     - python-codestyle-check
-
-testing:
-  stage: test
-  tags: [python3]
-  before_script: []
-  script:
-    - echo $SERVER_ACCESS_KEY
 
 unittest:
   stage: test
