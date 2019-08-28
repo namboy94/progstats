@@ -10,8 +10,9 @@ default:
     - apt update
     - apt install rsync ssh -y
     - pip install ci-scripts
-    - echo "$SERVER_ACCESS_KEY" > id_rsa
-    - chmod 0600 id_rsa
+    - mkdir -p ~/.ssh
+    - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
+    - chmod 0600 ~/.ssh/id_rsa
     - ssh-keyscan -H netcup.namibsun.net >> ~/.ssh/known_hosts
 
 stylecheck:
@@ -50,7 +51,7 @@ unittest:
     - docker
   script:
     - touch a
-    - rsync -e "ssh -i id_rsa" a hermann@netcup.namibsun.net:/home/hermann
+    - rsync a hermann@netcup.namibsun.net:/home/hermann
 #    - python-unittest  # TODO get access to outer files
 
 #deploy_page:
