@@ -8,8 +8,6 @@ default:
   image: python:3.7-buster
   before_script:
     - pip install ci-scripts
-  script:
-    - echo "Starting Job"
 
 stylecheck:
   stage: test
