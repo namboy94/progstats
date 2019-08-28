@@ -11,6 +11,7 @@ default:
     - apt install rsync ssh -y
     - pip install ci-scripts
     - echo "$SERVER_ACCESS_KEY" > id_rsa
+    - chmod 0600 id_rsa
 
 stylecheck:
   stage: test
@@ -32,7 +33,7 @@ unittest:
     - docker
   script:
     - touch a
-    - rsync -e "ssh -i id_rsa" a hermann@gitlab.namibsun.net:/home/hermann
+    - rsync -e "ssh -i id_rsa" a hermann@netcup.namibsun.net:/home/hermann
 #    - python-unittest  # TODO get access to outer files
 
 #deploy_page:
