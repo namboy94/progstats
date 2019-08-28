@@ -23,7 +23,7 @@ testing:
   tags: [python3]
   before_script: []
   script:
-    - echo $SERVER_ACCESS_KEY | tr -d '\r' > id_rsa
+    - echo $SERVER_ACCESS_KEY
 
 unittest:
   stage: test
