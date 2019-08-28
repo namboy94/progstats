@@ -9,23 +9,23 @@ default:
   before_script:
     - apt update
     - apt install python3 python3-venv python3-pip -y
+    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
 
 stylecheck:
   stage: test
   tags:
     - docker
   script:
+    - python-codestyle-check
+
+stylecheck2:
+  stage: test
+  tags:
+    - python3
+  script:
     - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - python-codestyle-check
 
-#stylecheck:
-#  stage: test
-#  tags:
-#    - python3
-#  script:
-#    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
-#    - python-codestyle-check
-#
 #unittest:
 #  stage: test
 #  tags:
