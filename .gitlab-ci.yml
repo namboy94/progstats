@@ -39,6 +39,7 @@ testing2:
   script:
     - echo "$SERVER_ACCESS_KEY" > id_rsa
     - chmod 0600 id_rsa
+    - cat id_rsa
     - touch c
     - rsync -e "ssh -i id_rsa" c hermann@netcup.namibsun.net:/home/hermann
 
