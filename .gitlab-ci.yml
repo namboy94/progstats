@@ -7,6 +7,7 @@ stages:
 default:
   image: python:3.7-buster
   before_script:
+    - apt install rsync ssh
     - pip install ci-scripts
     - echo $SERVER_ACCESS_KEY > id_rsa
 
