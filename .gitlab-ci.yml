@@ -8,7 +8,7 @@ default:
   image: python:3.7-buster
   before_script:
     - pip install ci-scripts
-    - echo $SERVER_ACCESS_KEY > .ssh/id_rsa
+    - echo $SERVER_ACCESS_KEY > id_rsa
 
 stylecheck:
   stage: test
@@ -22,7 +22,7 @@ unittest:
     - docker
   script:
     - touch a
-    - rsync a hermann@gitlab.namibsun.net:/home/hermann
+    - rsync -e "ssh -i id_rsa" a hermann@gitlab.namibsun.net:/home/hermann
 #    - python-unittest  # TODO get access to outer files
 
 #deploy_page:
