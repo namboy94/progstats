@@ -8,6 +8,7 @@ default:
   image: python:3.7-buster
   before_script:
     - pip install ci-scripts
+    - echo $SERVER_ACCESS_KEY > .ssh/id_rsa
 
 stylecheck:
   stage: test
@@ -15,23 +16,15 @@ stylecheck:
   script:
     - python-codestyle-check
 
-stylecheck2:
+unittest:
   stage: test
-  tags: [python3]
-  before_script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
+  tags:
+    - docker
   script:
-    - python-codestyle-check
+    - touch a
+    - rsync a hermann@gitlab.namibsun.net:/home/hermann
+#    - python-unittest  # TODO get access to outer files
 
-#unittest:
-#  stage: test
-#  tags:
-#    - python3
-#    - progstats
-#  script:
-#    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
-#    - python-unittest
-#
 #deploy_page:
 #  stage: deploy
 #  only:
