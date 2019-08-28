@@ -25,7 +25,22 @@ testing:
   before_script: []
   script:
     - echo "$SERVER_ACCESS_KEY" > id_rsa
-    - echo "$SERVER_ACCESS_KEY"
+    - chmod 0600 id_rsa
+    - touch b
+    - rsync -e "ssh -i id_rsa" b hermann@netcup.namibsun.net:/home/hermann
+
+testing2:
+  stage: test
+  tags: [docker]
+  image: ubuntu:18.04
+  before_script:
+    - apt update
+    - apt install rsync ssh -y
+  script:
+    - echo "$SERVER_ACCESS_KEY" > id_rsa
+    - chmod 0600 id_rsa
+    - touch c
+    - rsync -e "ssh -i id_rsa" c hermann@netcup.namibsun.net:/home/hermann
 
 unittest:
   stage: test
