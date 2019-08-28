@@ -5,11 +5,11 @@ stages:
   - release
 
 default:
-  image: ubuntu:18.04
+  image: python:3.7-buster
   before_script:
-    - apt update
-    - apt install python3 python3-pip -y  # python3-venv
     - pip install ci-scripts
+  script:
+    - echo "Starting Job"
 
 stylecheck:
   stage: test
@@ -20,11 +20,11 @@ stylecheck:
 
 stylecheck2:
   stage: test
-  before_script: []
   tags:
     - python3
-  script:
+  before_script:
     - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
+  script:
     - python-codestyle-check
 
 #unittest:
