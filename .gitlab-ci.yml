@@ -13,30 +13,17 @@ default:
     - mkdir -p ~/.ssh
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
-    - ssh-keyscan -H netcup.namibsun.net > ~/.ssh/known_hosts
+    - ssh-keyscan -H $PROGSTATS_DOMAIN > ~/.ssh/known_hosts
 
 stylecheck:
   stage: test
   tags: [docker]
-  script:
-    - python-codestyle-check
-
-testing:
-  stage: test
-  tags: [python3]
-  before_script: []
-  script:
-    - echo "$SERVER_ACCESS_KEY" > id_rsa
-    - chmod 0600 id_rsa
-    - touch b
-    - rsync -e "ssh -i id_rsa" b hermann@netcup.namibsun.net:/home/hermann
+  script: [python-codestyle-check]
 
 unittest:
   stage: test
-  tags:
-    - docker
-  script:
-    - python-unittest
+  tags: [docker]
+  script: [python-unittest]
 
 #deploy_page:
 #  stage: deploy
