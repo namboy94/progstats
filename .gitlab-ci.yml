@@ -6,20 +6,18 @@ stages:
 
 default:
   image: python:3.7-buster
-  tags:
-    - docker
   before_script:
     - pip install ci-scripts
 
 stylecheck:
   stage: test
+  tags: [docker]
   script:
     - python-codestyle-check
 
 stylecheck2:
   stage: test
-  tags:
-    - python3
+  tags: [python3]
   before_script:
     - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
   script:
