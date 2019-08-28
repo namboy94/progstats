@@ -18,6 +18,14 @@ stylecheck:
   script:
     - python-codestyle-check
 
+testing:
+  stage: test
+  tags: [python3]
+  before_script: []
+  script:
+    - echo "$SERVER_ACCESS_KEY" > id_rsa
+    - echo "$SERVER_ACCESS_KEY"
+
 unittest:
   stage: test
   tags:
