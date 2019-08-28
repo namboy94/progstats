@@ -8,7 +8,7 @@ default:
   image: python:3.7-buster
   before_script:
     - apt update
-    - apt install rsync ssh
+    - apt install rsync ssh -y
     - pip install ci-scripts
     - echo $SERVER_ACCESS_KEY > id_rsa
 
