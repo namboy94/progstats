@@ -13,7 +13,7 @@ default:
     - mkdir -p ~/.ssh
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
-    - ssh-keyscan -H netcup.namibsun.net >> ~/.ssh/known_hosts
+    - ssh-keyscan -H netcup.namibsun.net > ~/.ssh/known_hosts
 
 stylecheck:
   stage: test
@@ -31,28 +31,12 @@ testing:
     - touch b
     - rsync -e "ssh -i id_rsa" b hermann@netcup.namibsun.net:/home/hermann
 
-testing2:
-  stage: test
-  tags: [docker]
-  image: ubuntu:18.04
-  before_script:
-    - apt update
-    - apt install rsync ssh -y
-  script:
-    - echo "$SERVER_ACCESS_KEY" > id_rsa
-    - chmod 0600 id_rsa
-    - cat id_rsa
-    - touch c
-    - rsync -e "ssh -i id_rsa -oStrictHostKeyChecking=no" c hermann@netcup.namibsun.net:/home/hermann
-
 unittest:
   stage: test
   tags:
     - docker
   script:
-    - touch a
-    - rsync a hermann@netcup.namibsun.net:/home/hermann
-#    - python-unittest  # TODO get access to outer files
+    - python-unittest
 
 #deploy_page:
 #  stage: deploy
