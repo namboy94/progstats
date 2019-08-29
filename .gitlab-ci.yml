@@ -37,8 +37,10 @@ deploy_page:
   only: [master, develop]
   tags: [docker]
   script:
-    - apt install python3-venv
-    - deploy-flask $PROGSTATS_HOME
+    - apt install python3-dev libpython3-dev python3-mysqldb sshfs -y  # TODO Integrate in docker image
+    - mkdir host
+    - sshfs $PROGSTATS_DOMAIN:/ host
+    - deploy-flask /var/www/$PROGSTATS_DOMAIN
 
 release_upload:
   stage: release
