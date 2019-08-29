@@ -5,7 +5,7 @@ stages:
   - release
 
 default:
-  image: namboy94/ci-docker-environment:latest
+  image: namboy94/ci-docker-environment:0.1.0
   before_script:
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
@@ -13,12 +13,14 @@ default:
 stylecheck:
   stage: test
   tags: [docker]
-  script: [python-codestyle-check]
+  script:
+    - python-codestyle-check
 
 unittest:
   stage: test
   tags: [docker]
-  script: [python-unittest]
+  script:
+    - python-unittest
 
 deploy_page:
   stage: deploy
@@ -40,14 +42,17 @@ pypi_upload:
   stage: release
   only: [master]
   tags: [docker]
-  script: [pypi-upload]
+  script:
+    - pypi-upload
 
 gitstats:
   stage: stats
   tags: [docker]
-  script: [gitstats-gen]
+  script:
+    - gitstats-gen
 
 docgen:
   stage: stats
   tags: [docker]
-  script: [sphinx-docgen]
+  script:
+    - sphinx-docgen
