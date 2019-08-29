@@ -39,6 +39,7 @@ deploy_page:
   script:
     - apt install python3-dev fuse libpython3-dev python3-mysqldb sshfs -y  # TODO Integrate in docker image
     - mkdir host
+    - modprobe fuse
     - sshfs $PROGSTATS_DOMAIN:/ host
     - deploy-flask /var/www/$PROGSTATS_DOMAIN
 
