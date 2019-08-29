@@ -1,74 +1,71 @@
 stages:
+  - mirror
   - test
   - stats
   - deploy
   - release
 
+default:
+  image: namboy94/ci-docker-environment:0.1.0
+  before_script:
+    - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
+    - chmod 0600 ~/.ssh/id_rsa
+
+github_mirror:
+  stage: mirror
+  tags: [docker]
+  before_script:
+    - echo "$GITHUB_SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 0600 ~/.ssh/id_rsa
+  script:
+    - git-mirror-pusher git@github.com:namboy94/progstats.git master develop
+
 stylecheck:
   stage: test
-  tags:
-    - python3
+  tags: [docker]
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - python-codestyle-check
 
 unittest:
   stage: test
-  tags:
-    - python3
-    - progstats
+  tags: [docker]
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - python-unittest
 
 deploy_page:
   stage: deploy
-  only:
-    - master
-    - develop
-  tags:
-    - python3
-    - progstats
+  only: [master, develop]
+  tags: [progstats]
+  before_script:
+    - python3 -m venv virtual
+    - source virtual/bin/activate
+    - pip install ci-scripts
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - deploy-flask $PROGSTATS_HOME
 
 release_upload:
   stage: release
-  only:
-    - master
-  tags:
-    - python3
+  only: [master]
+  tags: [docker]
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - github-release-upload $(cat version) "$(changelog-reader)"
     - gitlab-release-upload $(cat version) "$(changelog-reader)"
 
 pypi_upload:
   stage: release
-  only:
-    - master
-  tags:
-    - python3
+  only: [master]
+  tags: [docker]
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - pypi-upload
 
 gitstats:
   stage: stats
-  tags:
-    - python3
-    - gitstats
-    - progstats
+  tags: [docker]
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - gitstats-gen
 
 docgen:
   stage: stats
-  tags:
-    - python3
-    - progstats
+  tags: [docker]
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - sphinx-docgen

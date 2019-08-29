@@ -23,3 +23,6 @@ data_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "data")
 os.environ["PROGSTATS_DATA"] = data_path
 
 from progstats.router import app as application
+
+if __name__ == "__main__":
+    application.run()

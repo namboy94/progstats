@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import pkg_resources
 from flask import Flask, render_template, abort, request
 from progstats.entities import get_topics, get_projects
 
@@ -29,7 +30,8 @@ def index():
     The Home page of the website. Will display the /project/ page.
     :return: The /projects/ page
     """
-    return render_template("home.html")
+    version = pkg_resources.get_distribution("progstats").version
+    return render_template("home.html", version=version)
 
 
 @app.route("/projects/")
@@ -91,8 +93,3 @@ def topics(topic_name: str = None):
                 projects=topic_projects,
                 host=request.host_url
             )
-
-
-@app.route("/test")
-def test():
-    return request.host_url.rsplit(":", 1)[0]
