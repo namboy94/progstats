@@ -36,6 +36,7 @@ deploy_page:
   stage: deploy
   only: [master, develop]
   tags: [progstats]
+  before_script: []
   script:
     - deploy-flask $PROGSTATS_HOME
 
