@@ -36,7 +36,10 @@ deploy_page:
   stage: deploy
   only: [master, develop]
   tags: [progstats]
-  before_script: []
+  before_script:
+    - python3 -m venv virtual
+    - source virtual/bin/activate
+    - pip install ci-scripts
   script:
     - deploy-flask $PROGSTATS_HOME
 
