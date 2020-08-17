@@ -1,0 +1,48 @@
+version: "3.2"
+services:
+  app:
+    build: .
+    image: "progstats"
+    container_name: "progstats-app"
+    depends_on:
+      - nginx
+      - ssh
+    volumes:
+      - content:/content:ro
+    ports:
+      - "${HTTP_PORT}:8000"
+    env_file: .env
+    environment:
+      - PROGSTATS_DATA=/content
+    restart: always
+  nginx:
+    image: nginx
+    container_name: "progstats-nginx"
+    env_file: .env
+    volumes:
+      - content:/usr/share/nginx/html:ro
+    ports:
+      - "${CONTENT_PORT}:80"
+    restart: always
+  ssh:
+    image: linuxserver/openssh-server
+    container_name: "progstats-ssh"
+    env_file: .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - PASSWORD_ACCESS=false
+      - SUDO_ACCESS=false
+      - USER_NAME=progstats
+      - DOCKER_MODS=linuxserver/mods:openssh-server-rsync
+    volumes:
+      - content:/content
+      - ssh_config:/config
+    ports:
+      - "${SSH_PORT}:2222"
+    restart: always
+
+volumes:
+  content: ~
+  ssh_config: ~
