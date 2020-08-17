@@ -48,7 +48,7 @@ fi
 
 
 
-docker exec -it "$APP_CONTAINER" printenv > backup/.env
+docker exec "$APP_CONTAINER" printenv > backup/.env
 
 tar -zcvpf "$TARGET" backup
 rm -rf backup

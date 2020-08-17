@@ -33,9 +33,9 @@ cp backup/.env .env
 
 docker-compose up --no-start
 
-docker run -it --rm -v "$CONTENT_VOLUME":/content -v "$(pwd)"/backup:/target \
+docker run -i --rm -v "$CONTENT_VOLUME":/content -v "$(pwd)"/backup:/target \
     ubuntu bash -c 'rm -rf /content/* && tar -C / -xvf /target/content.tar.gz'
-docker run -it --rm -v "$SSH_CONFIG_VOLUME":/ssh_config -v "$(pwd)"/backup:/target \
+docker run -i --rm -v "$SSH_CONFIG_VOLUME":/ssh_config -v "$(pwd)"/backup:/target \
     ubuntu bash -c 'rm -rf /ssh_config/* && tar -C / -xvf /target/ssh_config.tar.gz'
 
 docker-compose up -d
