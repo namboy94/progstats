@@ -20,8 +20,14 @@ LICENSE"""
 from progstats.router import app
 from cheroot.wsgi import Server, PathInfoDispatcher
 
-server = Server(
-    ("0.0.0.0", 8000),
-    PathInfoDispatcher({"/": app})
-)
-server.start()
+
+def main():
+    server = Server(
+        ("0.0.0.0", 8000),
+        PathInfoDispatcher({"/": app})
+    )
+    server.start()
+
+
+if __name__ == "__main__":
+    main()
