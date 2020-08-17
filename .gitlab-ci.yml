@@ -37,6 +37,7 @@ deploy_page:
   stage: deploy
   only: [master, develop]
   tags: [privileged, progstats]
+  before_script: []
   script:
     - echo "$ENV_FILE" > .env
     - docker-compose build
