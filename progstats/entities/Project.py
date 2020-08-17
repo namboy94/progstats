@@ -50,8 +50,7 @@ class Project:
 
         else:
             return os.path.join(
-                host,
-                "data",
+                os.environ["CONTENT_URL"],
                 topic.generate_path(self.name)
             )
 

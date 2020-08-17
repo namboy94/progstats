@@ -6,7 +6,7 @@ stages:
   - release
 
 default:
-  image: namboy94/ci-docker-environment:0.1.0
+  image: namboy94/ci-docker-environment:0.9.0
   before_script:
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
@@ -14,6 +14,7 @@ default:
 github_mirror:
   stage: mirror
   tags: [docker]
+  only: [master, develop]
   before_script:
     - echo "$GITHUB_SSH_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
@@ -35,13 +36,18 @@ unittest:
 deploy_page:
   stage: deploy
   only: [master, develop]
-  tags: [progstats]
-  before_script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - pip install ci-scripts
+  tags: [privileged, progstats]
+  before_script: []
   script:
-    - deploy-flask $PROGSTATS_HOME
+    - echo "$ENV_FILE" > .env
+    - docker-compose build
+    - bin/backup.sh backup.tar.gz 0
+    - docker-compose up -d
+    - docker exec progstats-ssh chown -R progstats:progstats /content
+  artifacts:
+    paths:
+      - backup.tar.gz
+    expire_in: 1 month
 
 release_upload:
   stage: release

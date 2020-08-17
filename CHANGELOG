@@ -1,3 +1,7 @@
+V 1.2.0:
+  - Started using docker for deployments
+V 1.1.1:
+  - Uses newer docker image for CI
 V 1.1.0:
   - Migrated CI to docker
   - Now uses Nginx as reverse proxy for apache

@@ -1,4 +1,4 @@
-"""
+"""LICENSE
 Copyright 2018 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of progstats.
@@ -15,14 +15,19 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with progstats.  If not, see <http://www.gnu.org/licenses/>.
-"""
+LICENSE"""
 
-import os
+from progstats.router import app
+from cheroot.wsgi import Server, PathInfoDispatcher
 
-data_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "data")
-os.environ["PROGSTATS_DATA"] = data_path
 
-from progstats.router import app as application
+def main():
+    server = Server(
+        ("0.0.0.0", 8000),
+        PathInfoDispatcher({"/": app})
+    )
+    server.start()
+
 
 if __name__ == "__main__":
-    application.run()
+    main()

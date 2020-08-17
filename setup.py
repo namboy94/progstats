@@ -18,6 +18,7 @@ along with progstats.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 # imports
+import os
 from setuptools import setup, find_packages
 
 
@@ -33,12 +34,13 @@ if __name__ == "__main__":
         classifiers=[
             "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
         ],
+        scripts=list(map(lambda x: os.path.join("bin", x), os.listdir("bin"))),
         url="https://gitlab.namibsun.net/namibsun/python/progstats",
         author="Hermann Krumrey",
         author_email="hermann@krumreyh.com",
         license="GNU GPL3",
         packages=find_packages(),
-        install_requires=["flask"],
+        install_requires=["flask", "cheroot"],
         include_package_data=True,
         zip_safe=False
     )
